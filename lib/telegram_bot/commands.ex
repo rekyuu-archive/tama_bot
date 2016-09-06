@@ -35,7 +35,7 @@ defmodule TelegramBot.Commands do
 
     :random.seed(num)
 
-    request = "http://danbooru.donmai.us/posts.json?limit=#{Enum.random(50..100)}&page=#{Enum.random(1..10)}&tags=rating:safe" |> HTTPoison.get!
+    request = "http://danbooru.donmai.us/posts.json?limit=#{Enum.random(50..100)}&page=#{Enum.random(1..3)}&tags=rating:safe+order:rank" |> HTTPoison.get!
     result = Poison.Parser.parse!((request.body), keys: :atoms) |> Enum.random
     file = download "http://danbooru.donmai.us#{result.file_url}"
     post_id = Integer.to_string(result.id)
