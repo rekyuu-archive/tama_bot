@@ -36,4 +36,4 @@ use Mix.Config
 import_config "secret.exs"
 
 config :telegram_bot,
-  username: "your_bot_name"
+  username: "TamaChanBot"
