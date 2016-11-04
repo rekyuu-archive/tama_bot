@@ -53,13 +53,13 @@ defmodule TelegramBot.Module do
 
   defmacro reply(text) do
     quote do
-      Nadia.send_message(var!(msg).chat.id, unquote(text))
+      Nadia.send_message(var!(msg).chat.id, unquote(text), [parse_mode: "Markdown"])
     end
   end
 
   defmacro reply_no_preview(text) do
     quote do
-      Nadia.send_message(var!(msg).chat.id, unquote(text), [disable_web_page_preview: true])
+      Nadia.send_message(var!(msg).chat.id, unquote(text), [disable_web_page_preview: true, parse_mode: "Markdown"])
     end
   end
 
