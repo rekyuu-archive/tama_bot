@@ -38,11 +38,6 @@ defmodule TelegramBot.Polling do
   def handle_info({:update, id}, state) do
     new_id = Nadia.get_updates([offset: id]) |> process_messages_list
 
-    case :calendar.local_time do
-      {{_,_,_},{9,0,0}}  -> TelegramBot.Util.daily
-      _                  -> nil
-    end
-
     :erlang.send_after(1000, self, {:update, new_id + 1})
     {:noreply, state}
   end

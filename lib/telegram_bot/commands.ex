@@ -3,7 +3,7 @@ defmodule TelegramBot.Commands do
   import TelegramBot.Util
   require Logger
 
-  command ["start", "tama", "nya", "ping"] do
+  command "tama" do
     Logger.log :warn, "== DEBUG =="
     Logger.log :debug, "msg.chat.id: #{msg.chat.id}"
     Logger.log :debug, "msg.chat.type: #{msg.chat.type}"
@@ -11,19 +11,8 @@ defmodule TelegramBot.Commands do
     Logger.log :debug, "msg.text: #{msg.text}"
 
     id = rekyuu_id
-    case msg.chat.id do
+    case msg.from.id do
       ^id -> reply "Nya ~"
-      _ ->
-        reply "I'm not allowed to talk to strangers, nya."
-        rekyuu "Someone strange tried talking to me just nyow."
-    end
-  end
-
-  command "daily" do
-    id = rekyuu_id
-
-    case msg.chat.id do
-      ^id -> daily
       _ ->
         reply "I'm not allowed to talk to strangers, nya."
         rekyuu "Someone strange tried talking to me just nyow."
@@ -56,7 +45,7 @@ defmodule TelegramBot.Commands do
       end
 
     id = rekyuu_id
-    case msg.chat.id do
+    case msg.from.id do
       ^id -> reply_photo_with_caption file, """
         #{rarity} (#{num})
 
