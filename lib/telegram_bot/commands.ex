@@ -59,7 +59,7 @@ defmodule TelegramBot.Commands do
         File.rm file
       _ ->
         reply "I'm not allowed to talk to strangers, nya."
-        rekyuu "Someone strange tried talking to me just nyow."
+        rekyuu "@#{msg.from.username} tried talking to me just nyow."
     end
   end
 end
