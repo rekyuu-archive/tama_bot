@@ -71,7 +71,7 @@ defmodule TelegramBot.Module do
 
   defmacro reply_photo_with_caption(photo, text) do
     quote do
-      Nadia.send_photo(var!(msg).chat.id, unquote(photo), [caption: unquote(text)])
+      Nadia.send_photo(var!(msg).chat.id, unquote(photo), [caption: unquote(text), parse_mode: "Markdown"])
     end
   end
 end
