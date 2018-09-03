@@ -70,7 +70,7 @@ defmodule TelegramBot.Commands do
           |> String.split("_(")
           |> List.first
           |> titlecase("_")
-        end
+        end |> Enum.uniq
 
         copyright = 
           copyright_tags 
