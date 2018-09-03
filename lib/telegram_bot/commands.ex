@@ -90,7 +90,7 @@ defmodule TelegramBot.Commands do
         end
 
         caption_string = case characters do
-          ", and " -> "copyright"
+          ", and " -> "#{copyright}"
           _ -> "#{characters} - #{copyright}"
         end
 
