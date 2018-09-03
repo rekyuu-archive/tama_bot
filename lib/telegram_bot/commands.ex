@@ -23,11 +23,11 @@ defmodule TelegramBot.Commands do
 
   command "draw" do
     id = rekyuu_id
-    :rand.seed(:exs1024, {num, 0, 0})
 
     case msg.from.id do
       ^id ->
         {num, rarity} = draw
+        :rand.seed(:exs1024, {num, 0, 0})
 
         tags = case rarity do
           "⭐️⭐️⭐️⭐️" -> "rating:e+order:portrait+order:rank+-comic+-chat_log+-long_image"
