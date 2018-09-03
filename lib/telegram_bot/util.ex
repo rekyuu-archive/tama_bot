@@ -7,11 +7,15 @@ defmodule TelegramBot.Util do
   def rekyuu(msg),  do: Nadia.send_message(rekyuu_id, msg, [parse_mode: "Markdown"])
 
   def titlecase(title, mod) do
-    words = title |> String.split(mod)
-
-    for word <- words do
-      word |> String.capitalize
-    end |> Enum.join(" ")
+    case title do
+      nil -> ""
+      _   ->
+        words = title |> String.split(mod)
+    
+        for word <- words do
+          word |> String.capitalize
+        end |> Enum.join(" ")
+    end
   end
 
   def download(url) do
