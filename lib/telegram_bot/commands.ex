@@ -55,6 +55,7 @@ defmodule TelegramBot.Commands do
         end
 
         file = download image_url
+        action "upload_photo"
 
         post_id = Integer.to_string(result.id)
         artist =

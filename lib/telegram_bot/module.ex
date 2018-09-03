@@ -57,6 +57,12 @@ defmodule TelegramBot.Module do
     end
   end
 
+  defmacro action(text) do
+    quote do
+      Nadia.functionsend_chat_action(var!(msg).chat.id, unquote(text))
+    end
+  end
+
   defmacro reply_no_preview(text) do
     quote do
       Nadia.send_message(var!(msg).chat.id, unquote(text), [disable_web_page_preview: true, parse_mode: "Markdown"])
