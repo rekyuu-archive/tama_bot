@@ -66,7 +66,7 @@ defmodule TelegramBot.Commands do
 
         character_tags_cleaned = for tag <- character_tags do
           tag
-          |> String.split("(")
+          |> String.split(" (")
           |> List.first
           |> titlecase("_")
         end
