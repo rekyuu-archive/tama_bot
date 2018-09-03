@@ -82,8 +82,7 @@ defmodule TelegramBot.Commands do
 
           #{char} - #{copy}
           Drawn by #{artist}
-          https://danbooru.donmai.us/posts/#{post_id}
-          """
+          https://danbooru.donmai.us/posts/#{post_id}"""
 
         File.rm file
       _ ->
