@@ -26,15 +26,14 @@ defmodule TelegramBot.Util do
   end
 
   def draw do
-    number = Enum.random(1..10000000)
+    number = Enum.random(1..1_000_000)
 
-    rarity =
-      cond do
-        number <=     2000 -> "COMMON"
-        number <=   300000 -> "SUPER SUPER RARE"
-        number <=  1800000 -> "SUPER RARE"
-        number <= 10000000 -> "RARE"
-      end
+    rarity = cond do
+      number <=       320 -> "⭐️"
+      number <=    59_680 -> "⭐️⭐️⭐️⭐️"
+      number <=   150_000 -> "⭐️⭐️⭐️"
+      number <= 1_000_000 -> "⭐️⭐️"
+    end
 
     {number, rarity}
   end

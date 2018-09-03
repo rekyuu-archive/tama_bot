@@ -23,17 +23,44 @@ defmodule TelegramBot.Commands do
 
   command "draw" do
     id = rekyuu_id
+    :rand.seed(:exs1024, {num, 0, 0})
+
     case msg.from.id do
       ^id ->
         {num, rarity} = draw
 
-        :rand.seed(:exs1024, {num, 0, 0})
+        tags = case rarity do
+          "⭐️⭐️⭐️⭐️" -> "rating:e+order:portrait+order:rank+-comic+-chat_log+-long_image"
+          "⭐️⭐️⭐️"   -> "rating:q+order:portrait+order:rank+-comic+-chat_log+-long_image"
+          "⭐️⭐️"     -> "-rating:e+order:portrait+order:rank+-comic+-chat_log+-long_image"
+          "⭐️"       -> "rating:s+order:portrait+score:0+age:6mo..1y+-comic -chat_log+-highres"
+        end
 
-        request = "http://danbooru.donmai.us/posts.json?limit=#{Enum.random(50..100)}&page=#{Enum.random(1..3)}&tags=rating:s+order:rank" |> HTTPoison.get!
-        result = Poison.Parser.parse!((request.body), keys: :atoms) |> Enum.random
-        file = download "http://danbooru.donmai.us#{result.file_url}"
+        request_url = "https://danbooru.donmai.us/posts.json?limit=50&page=1&random=true&tags=#{tags}"
+        request_auth = [hackney: [basic_auth: {
+          Application.get_env(:telegram_bot, :danbooru_login),
+          Application.get_env(:telegram_bot, :danbooru_api_key)
+        }]]
+
+        request = request_url |> HTTPoison.get!(%{}, request_auth)
+        
+        result = 
+          Poison.Parser.parse!((request.body), keys: :atoms) 
+          |> Enum.random
+
+        image_url = if URI.parse(result.file_url).host do
+          result.file_url
+        else
+          "http://danbooru.donmai.us#{result.file_url}"
+        end
+
+        file = download image_url
 
         post_id = Integer.to_string(result.id)
+        artist =
+          result.tag_string_artist
+          |> String.split("_")
+          |> Enum.join(" ")
         character = result.tag_string_character |> String.split
         copyright = result.tag_string_copyright |> String.split
 
@@ -50,9 +77,11 @@ defmodule TelegramBot.Commands do
           end
 
         reply_photo_with_caption file, """
-          #{rarity} (#{num})
+          #{rarity}
+          ##{num}
 
           #{char} - #{copy}
+          Drawn by #{artist}
           https://danbooru.donmai.us/posts/#{post_id}
           """
 
