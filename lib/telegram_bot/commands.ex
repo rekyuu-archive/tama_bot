@@ -71,7 +71,11 @@ defmodule TelegramBot.Commands do
           |> titlecase("_")
         end
 
-        copyright = copyright_tags |> List.first
+        copyright = 
+          copyright_tags 
+          |> List.first
+          |> titlecase("_")
+
         characters = case length(character_tags_cleaned) do
           1 -> character_tags_cleaned |> List.first
           2 -> character_tags_cleaned |> Enum.join(" and ")
@@ -89,7 +93,7 @@ defmodule TelegramBot.Commands do
           ##{num}
 
           **#{characters} - #{copyright}**
-          [__Drawn by #{artist}__](https://danbooru.donmai.us/posts/#{post_id})
+          __[Drawn by #{artist}](https://danbooru.donmai.us/posts/#{post_id})__
           """
 
         File.rm file
