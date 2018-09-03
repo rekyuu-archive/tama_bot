@@ -96,7 +96,7 @@ defmodule TelegramBot.Commands do
 
         reply_photo_with_caption file, """
           #{rarity}
-          ##{num}
+          #{num}-#{result.rating |> String.upcase}
 
           *#{caption_string}*
           [Drawn by #{artist}](https://danbooru.donmai.us/posts/#{post_id})
