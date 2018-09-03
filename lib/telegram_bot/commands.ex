@@ -88,9 +88,8 @@ defmodule TelegramBot.Commands do
           #{rarity}
           ##{num}
 
-          #{characters} - #{copyright}
-          Drawn by #{artist}
-          https://danbooru.donmai.us/posts/#{post_id}
+          **#{characters} - #{copyright}**
+          [__Drawn by #{artist}__](https://danbooru.donmai.us/posts/#{post_id})
           """
 
         File.rm file
