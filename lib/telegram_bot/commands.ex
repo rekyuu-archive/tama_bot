@@ -92,7 +92,7 @@ defmodule TelegramBot.Commands do
           #{rarity}
           ##{num}
 
-          *#{characters} - _#{copyright}_*
+          *#{characters} - #{copyright}*
           [Drawn by #{artist}](https://danbooru.donmai.us/posts/#{post_id})
           """
 
