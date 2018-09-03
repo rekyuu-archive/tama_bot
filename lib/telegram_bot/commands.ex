@@ -88,11 +88,16 @@ defmodule TelegramBot.Commands do
               |> Enum.join(", and ")
         end
 
+        caption_string = case characters do
+          ", and " -> "copyright"
+          _ -> "#{characters} - #{copyright}"
+        end
+
         reply_photo_with_caption file, """
           #{rarity}
           ##{num}
 
-          *#{characters} - #{copyright}*
+          *#{caption_string}*
           [Drawn by #{artist}](https://danbooru.donmai.us/posts/#{post_id})
           """
 
