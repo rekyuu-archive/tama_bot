@@ -59,7 +59,7 @@ defmodule TelegramBot.Module do
 
   defmacro action(text) do
     quote do
-      Nadia.functionsend_chat_action(var!(msg).chat.id, unquote(text))
+      Nadia.send_chat_action(var!(msg).chat.id, unquote(text))
     end
   end
 
