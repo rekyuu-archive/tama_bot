@@ -61,26 +61,34 @@ defmodule TelegramBot.Commands do
           result.tag_string_artist
           |> String.split("_")
           |> Enum.join(" ")
-        character = result.tag_string_character |> String.split
-        copyright = result.tag_string_copyright |> String.split
+        character_tags = result.tag_string_character |> String.split
+        copyright_tags = result.tag_string_copyright |> String.split
 
-        {char, copy} =
-          case {length(character), length(copyright)} do
-            {1, _} ->
-              {List.first(character)
-               |> String.split("(")
-               |> List.first
-               |> titlecase("_"),
-               List.first(copyright) |> titlecase("_")}
-            {_, 1} -> {"Multiple", List.first(copyright) |> titlecase("_")}
-            {_, _} -> {"Multiple", "Various"}
-          end
+        character_tags_cleaned = for tag <- character_tags do
+          tag
+          |> String.split("(")
+          |> List.first
+          |> titlecase("_")
+        end
+
+        copyright = copyright_tags |> List.first
+        characters = case length(character_tags_cleaned) do
+          1 -> character_tags_cleaned |> List.first
+          2 -> character_tags_cleaned |> Enum.join(" and ")
+          _ -> [
+                character_tags_cleaned
+                |> Enum.drop(-1)
+                |> Enum.join(", "), 
+                List.last(character_tags_cleaned)
+              ]
+              |> Enum.join(", and ")
+        end
 
         reply_photo_with_caption file, """
           #{rarity}
           ##{num}
 
-          #{char} - #{copy}
+          #{characters} - #{copyright}
           Drawn by #{artist}
           https://danbooru.donmai.us/posts/#{post_id}
           """
